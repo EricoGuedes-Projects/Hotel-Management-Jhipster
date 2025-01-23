@@ -1,0 +1,73 @@
+// Entidades principais do sistema de hotel
+
+entity Room {
+    roomNumber Integer required unique, // Número do quarto
+    roomType String required,           // Tipo do quarto (ex.: single, double, suite)
+    pricePerNight BigDecimal required,  // Preço por noite
+    isAvailable Boolean required,       // Indica se o quarto está disponível
+    amenities String                    // Comodidades (ex.: Wi-Fi, Ar-condicionado)
+}
+
+entity Reservation {
+    checkInDate Instant required,       // Data de check-in
+    checkOutDate Instant required,      // Data de check-out
+    totalAmount BigDecimal required,    // Valor total da reserva
+    status ReservationStatus required   // Status da reserva (ex.: CONFIRMED, CANCELLED)
+}
+
+enum ReservationStatus {
+    PENDING, CONFIRMED, CANCELLED
+}
+
+entity Employee {
+    firstName String required,          // Nome do funcionário
+    lastName String required,           // Sobrenome do funcionário
+    email String required unique,       // E-mail único
+    position String required,           // Cargo do funcionário (ex.: recepcionista, gerente)
+    salary BigDecimal                   // Salário do funcionário
+}
+
+entity Payment {
+    paymentDate Instant required,       // Data do pagamento
+    amount BigDecimal required,         // Valor pago
+    paymentMethod PaymentMethod required // Método de pagamento
+}
+
+enum PaymentMethod {
+    CASH, CREDIT_CARD, DEBIT_CARD, ONLINE
+}
+
+entity Feedback {
+    feedbackDate Instant required,      // Data do feedback
+    rating Integer required min(1) max(5), // Avaliação do cliente (1-5)
+    comments String                     // Comentários adicionais
+}
+
+// Relacionamentos entre as entidades
+
+relationship ManyToOne {
+    Reservation{room} to Room,
+    Reservation{responsible} to Employee,
+    Reservation{user} to User
+}
+
+relationship ManyToOne {
+    Employee{manager} to Employee
+}
+
+relationship OneToMany {
+    User{feedbacks} to Feedback
+}
+
+relationship ManyToOne {
+    Feedback{reservation} to Reservation
+}
+
+relationship OneToOne {
+    Reservation{payment} to Payment
+}
+
+// Regras adicionais de negócio
+paginate Room, Reservation, Employee, Payment, Feedback with pagination
+service all with serviceImpl
+dto all with mapstruct
