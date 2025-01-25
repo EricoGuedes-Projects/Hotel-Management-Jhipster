@@ -1,0 +1,28 @@
+{
+  "finalApp": {
+    "room": {
+      "home": {
+        "title": "Rooms",
+        "refreshListLabel": "Atualizar lista",
+        "createLabel": "Criar novo Room",
+        "createOrEditLabel": "Criar ou editar Room",
+        "notFound": "Nenhum Room encontrado"
+      },
+      "created": "Um novo Room foi criado com o identificador {{ param }}",
+      "updated": "Um Room foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Room foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Room {{ id }}?"
+      },
+      "detail": {
+        "title": "Room"
+      },
+      "id": "ID",
+      "roomNumber": "Room Number",
+      "roomType": "Room Type",
+      "pricePerNight": "Price Per Night",
+      "isAvailable": "Is Available",
+      "amenities": "Amenities"
+    }
+  }
+}

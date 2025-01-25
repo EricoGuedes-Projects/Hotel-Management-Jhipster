@@ -8,7 +8,11 @@
       "entities": {
         "main": "Entidades",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
-        "adminAuthority": "Authority"
+        "employee": "Employee",
+        "feedback": "Feedback",
+        "payment": "Payment",
+        "reservation": "Reservation",
+        "room": "Room"
       },
       "account": {
         "main": "Conta",

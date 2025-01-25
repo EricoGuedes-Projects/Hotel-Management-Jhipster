@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (employee(); as employeeRef) {
+      <div>
+        <h2 data-cy="employeeDetailsHeading"><span jhiTranslate="finalApp.employee.detail.title">Employee</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">Código</span></dt>
+          <dd>
+            <span>{{ employeeRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.employee.firstName">First Name</span></dt>
+          <dd>
+            <span>{{ employeeRef.firstName }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.employee.lastName">Last Name</span></dt>
+          <dd>
+            <span>{{ employeeRef.lastName }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.employee.email">Email</span></dt>
+          <dd>
+            <span>{{ employeeRef.email }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.employee.position">Position</span></dt>
+          <dd>
+            <span>{{ employeeRef.position }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.employee.salary">Salary</span></dt>
+          <dd>
+            <span>{{ employeeRef.salary }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+        </button>
+
+        <button type="button" [routerLink]="['/employee', employeeRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

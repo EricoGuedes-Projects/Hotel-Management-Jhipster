@@ -1,16 +1,25 @@
-<div class="row">
-  <div class="col-md-3">
-    <span class="hipster img-fluid rounded"></span>
+<div class="row align-items-center my-5">
+  <!-- Imagem principal -->
+  <div class="col-md-3 text-center">
+    <span class="hipster img-fluid rounded-circle border shadow"></span>
   </div>
 
+  <!-- Conteúdo principal -->
   <div class="col-md-9">
-    <h1 class="display-4"><span jhiTranslate="home.title">Bem vindo, Java Hipster!</span> (Final)</h1>
+    <h1 class="display-4 fw-bold text-dark">
+      <span>Sistema de Gerenciamento de Hotel - JHipster!</span>
+    </h1>
+    <p class="lead text-secondary">
+      Um projeto completo para gerenciamento de hotéis, desenvolvido com JHipster, integrando um backend Java (Spring Boot), frontend
+      Angular, e banco de dados PostgreSQL.
+    </p>
+    <p class="lead text-secondary">Criado por Erico Gonçalves Guedes.</p>
 
-    <p class="lead" jhiTranslate="home.subtitle">Esta é a página principal</p>
-
-    <div>
+    <!-- Alertas de autenticação -->
+    <div class="mt-4">
       @if (account() !== null) {
-        <div class="alert alert-success">
+        <div class="alert alert-success d-flex align-items-center">
+          <fa-icon icon="check-circle" class="me-2 text-success"></fa-icon>
           @if (account(); as accountRef) {
             <span id="home-logged-message" jhiTranslate="home.logged.message" [translateValues]="{ username: accountRef.login }"
               >Você está logado como &quot;{{ accountRef.login }}&quot;.</span
@@ -18,63 +27,136 @@
           }
         </div>
       } @else {
-        <div class="alert alert-warning">
-          <span jhiTranslate="global.messages.info.authenticated.prefix">Se deseja </span>
-          <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">entrar</a
-          ><span jhiTranslate="global.messages.info.authenticated.suffix"
-            >, utilize as seguintes contas padrões:<br />- Administrador (usuário=&quot;admin&quot; and senha=&quot;admin&quot;) <br />-
-            Usuário (usuário=&quot;user&quot; e senha=&quot;user&quot;).</span
-          >
+        <div class="alert alert-warning d-flex align-items-center">
+          <fa-icon icon="exclamation-triangle" class="me-2 text-warning"></fa-icon>
+          <span>
+            <span jhiTranslate="global.messages.info.authenticated.prefix">Se deseja </span>
+            <a class="alert-link fw-bold" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">entrar</a>
+            <span jhiTranslate="global.messages.info.authenticated.suffix">
+              , utilize as seguintes contas padrões:
+              <br />- Administrador (usuário=&quot;admin&quot; e senha=&quot;admin&quot;) <br />- Usuário (usuário=&quot;user&quot; e
+              senha=&quot;user&quot;).
+            </span>
+          </span>
         </div>
 
-        <div class="alert alert-warning">
-          <span jhiTranslate="global.messages.info.register.noaccount">Não possui uma conta ainda?</span>&nbsp;
-          <a class="alert-link" routerLink="/account/register" jhiTranslate="global.messages.info.register.link">Crie uma nova conta</a>
+        <div class="alert alert-warning d-flex align-items-center">
+          <fa-icon icon="user-plus" class="me-2 text-warning"></fa-icon>
+          <span>
+            <span jhiTranslate="global.messages.info.register.noaccount">Não possui uma conta ainda?</span>&nbsp;
+            <a class="alert-link fw-bold" routerLink="/account/register" jhiTranslate="global.messages.info.register.link"
+              >Crie uma nova conta</a
+            >
+          </span>
         </div>
       }
     </div>
 
-    <p jhiTranslate="home.question">Em caso de dúvida sobre o JHipster:</p>
+    <!-- Links e informações de contato -->
+    <div class="row mt-5">
+      <div class="col-md-6">
+        <p class="fw-bold text-dark">Dúvidas sobre o JHipster:</p>
+        <ul class="list-unstyled">
+          <li>
+            <a
+              href="https://www.jhipster.tech/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-decoration-none text-dark"
+              jhiTranslate="home.link.homepage"
+              >Página principal JHipster</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://stackoverflow.com/tags/jhipster/info"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-decoration-none text-dark"
+              jhiTranslate="home.link.stackoverflow"
+              >JHipster no Stack Overflow</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://github.com/jhipster/generator-jhipster/issues?state=open"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-decoration-none text-dark"
+              jhiTranslate="home.link.bugtracker"
+              >JHipster bug tracker</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://gitter.im/jhipster/generator-jhipster"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-decoration-none text-dark"
+              jhiTranslate="home.link.chat"
+              >Sala de bate-papo pública JHipster</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://twitter.com/jhipster"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-decoration-none text-dark"
+              jhiTranslate="home.link.follow"
+              >Siga &#64;jhipster no Twitter</a
+            >
+          </li>
+        </ul>
+      </div>
 
-    <ul>
-      <li>
-        <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.homepage"
-          >Página principal JHipster</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://stackoverflow.com/tags/jhipster/info"
-          target="_blank"
-          rel="noopener noreferrer"
-          jhiTranslate="home.link.stackoverflow"
-          >JHipster no Stack Overflow</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/jhipster/generator-jhipster/issues?state=open"
-          target="_blank"
-          rel="noopener noreferrer"
-          jhiTranslate="home.link.bugtracker"
-          >JHipster bug tracker</a
-        >
-      </li>
-      <li>
-        <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.chat"
-          >Sala de bate-papo pública JHipster</a
-        >
-      </li>
-      <li>
-        <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.follow"
-          >siga &#64;jhipster no Twitter</a
-        >
-      </li>
-    </ul>
+      <div class="col-md-6">
+        <p class="fw-bold text-dark">Informações de contato:</p>
+        <ul class="list-unstyled">
+          <li class="d-flex align-items-center">
+            <fa-icon icon="linkedin" class="me-2 text-primary"></fa-icon>
+            <span>LinkedIn: </span>
+            <a
+              href="https://www.linkedin.com/in/erico-goncalves-guedes/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-decoration-none fw-bold text-dark"
+              >Erico Gonçalves Guedes</a
+            >
+          </li>
+          <li class="d-flex align-items-center">
+            <fa-icon icon="github" class="me-2 text-dark"></fa-icon>
+            <span>GitHub: </span>
+            <a
+              href="https://github.com/EricoGuedes-Projects"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-decoration-none fw-bold text-dark"
+              >Erico Guedes - Projetos</a
+            >
+          </li>
+          <li class="d-flex align-items-center">
+            <fa-icon icon="whatsapp" class="me-2 text-success"></fa-icon>
+            <span>WhatsApp: </span>
+            <a target="_blank" rel="noopener noreferrer" class="text-decoration-none fw-bold text-dark">+55 (27) 99776-7638</a>
+          </li>
+          <li class="d-flex align-items-center">
+            <fa-icon icon="envelope" class="me-2 text-secondary"></fa-icon>
+            <span>Email: </span>
+            <a href="mailto:egoncalvesguedes@gmail.com" class="text-decoration-none fw-bold text-dark">egoncalvesguedes&#64;gmail.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-    <p>
+    <p class="mt-3">
       <span jhiTranslate="home.like">Se você gosta do JHipster, não se esqueça de avaliar no</span>
-      <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.github"
+      <a
+        href="https://github.com/jhipster/generator-jhipster"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-decoration-none fw-bold text-dark"
+        jhiTranslate="home.github"
         >GitHub</a
       >!
     </p>

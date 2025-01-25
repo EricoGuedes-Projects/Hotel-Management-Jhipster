@@ -1,0 +1,28 @@
+{
+  "annotations": {
+    "changelogDate": "20250124001345"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "paymentDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "paymentMethod",
+      "fieldType": "PaymentMethod",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "CASH,CREDIT_CARD,DEBIT_CARD,ONLINE"
+    }
+  ],
+  "name": "Payment",
+  "pagination": "infinite-scroll",
+  "relationships": [],
+  "searchEngine": "no"
+}

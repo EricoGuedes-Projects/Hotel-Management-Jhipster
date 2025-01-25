@@ -46,28 +46,17 @@ entity Feedback {
 // Relacionamentos entre as entidades
 
 relationship ManyToOne {
-    Reservation{room} to Room,
-    Reservation{responsible} to Employee,
-    Reservation{user} to User
-}
-
-relationship ManyToOne {
-    Employee{manager} to Employee
-}
-
-relationship OneToMany {
-    User{feedbacks} to Feedback
-}
-
-relationship ManyToOne {
-    Feedback{reservation} to Reservation
+    Reservation{room(roomNumber)} to Room,
+    Reservation{responsible(firstName)} to Employee,
+    Reservation{user(login)} to User with builtInEntity,
+    Feedback{user(login)} to User with builtInEntity,
+    Feedback{reservation(checkInDate)} to Reservation,
 }
 
 relationship OneToOne {
-    Reservation{payment} to Payment
+    Reservation{payment(PaymentMethod)} to Payment
 }
 
 // Regras adicionais de negócio
-paginate Room, Reservation, Employee, Payment, Feedback with pagination
-service all with serviceImpl
-dto all with mapstruct
+paginate Room, Reservation, Employee, Payment, Feedback with infinite-scroll
+

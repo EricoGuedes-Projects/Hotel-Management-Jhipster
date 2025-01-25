@@ -1,0 +1,126 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-room-heading" data-cy="RoomCreateUpdateHeading" jhiTranslate="finalApp.room.home.createOrEditLabel">
+        Criar ou editar Room
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="finalApp.room.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let roomNumberRef = editForm.get('roomNumber')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_roomNumber" jhiTranslate="finalApp.room.roomNumber">Room Number</label>
+          <input
+            type="number"
+            class="form-control"
+            name="roomNumber"
+            id="field_roomNumber"
+            data-cy="roomNumber"
+            formControlName="roomNumber"
+          />
+          @if (roomNumberRef.invalid && (roomNumberRef.dirty || roomNumberRef.touched)) {
+            <div>
+              @if (editForm.get('roomNumber')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('roomNumber')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >Este campo é do tipo numérico.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let roomTypeRef = editForm.get('roomType')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_roomType" jhiTranslate="finalApp.room.roomType">Room Type</label>
+          <input type="text" class="form-control" name="roomType" id="field_roomType" data-cy="roomType" formControlName="roomType" />
+          @if (roomTypeRef.invalid && (roomTypeRef.dirty || roomTypeRef.touched)) {
+            <div>
+              @if (editForm.get('roomType')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let pricePerNightRef = editForm.get('pricePerNight')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_pricePerNight" jhiTranslate="finalApp.room.pricePerNight">Price Per Night</label>
+          <input
+            type="number"
+            class="form-control"
+            name="pricePerNight"
+            id="field_pricePerNight"
+            data-cy="pricePerNight"
+            formControlName="pricePerNight"
+          />
+          @if (pricePerNightRef.invalid && (pricePerNightRef.dirty || pricePerNightRef.touched)) {
+            <div>
+              @if (editForm.get('pricePerNight')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('pricePerNight')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >Este campo é do tipo numérico.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let isAvailableRef = editForm.get('isAvailable')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_isAvailable" jhiTranslate="finalApp.room.isAvailable">Is Available</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isAvailable"
+            id="field_isAvailable"
+            data-cy="isAvailable"
+            formControlName="isAvailable"
+          />
+          @if (isAvailableRef.invalid && (isAvailableRef.dirty || isAvailableRef.touched)) {
+            <div>
+              @if (editForm.get('isAvailable')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_amenities" jhiTranslate="finalApp.room.amenities">Amenities</label>
+          <input type="text" class="form-control" name="amenities" id="field_amenities" data-cy="amenities" formControlName="amenities" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Salvar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

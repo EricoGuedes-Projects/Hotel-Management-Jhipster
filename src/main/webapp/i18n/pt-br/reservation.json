@@ -1,0 +1,31 @@
+{
+  "finalApp": {
+    "reservation": {
+      "home": {
+        "title": "Reservations",
+        "refreshListLabel": "Atualizar lista",
+        "createLabel": "Criar novo Reservation",
+        "createOrEditLabel": "Criar ou editar Reservation",
+        "notFound": "Nenhum Reservation encontrado"
+      },
+      "created": "Um novo Reservation foi criado com o identificador {{ param }}",
+      "updated": "Um Reservation foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Reservation foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Reservation {{ id }}?"
+      },
+      "detail": {
+        "title": "Reservation"
+      },
+      "id": "ID",
+      "checkInDate": "Check In Date",
+      "checkOutDate": "Check Out Date",
+      "totalAmount": "Total Amount",
+      "status": "Status",
+      "payment": "Payment",
+      "room": "Room",
+      "responsible": "Responsible",
+      "user": "User"
+    }
+  }
+}

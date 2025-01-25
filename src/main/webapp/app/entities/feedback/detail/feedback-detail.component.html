@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (feedback(); as feedbackRef) {
+      <div>
+        <h2 data-cy="feedbackDetailsHeading"><span jhiTranslate="finalApp.feedback.detail.title">Feedback</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">Código</span></dt>
+          <dd>
+            <span>{{ feedbackRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.feedback.feedbackDate">Feedback Date</span></dt>
+          <dd>
+            <span>{{ feedbackRef.feedbackDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.feedback.rating">Rating</span></dt>
+          <dd>
+            <span>{{ feedbackRef.rating }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.feedback.comments">Comments</span></dt>
+          <dd>
+            <span>{{ feedbackRef.comments }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.feedback.user">User</span></dt>
+          <dd>
+            <span>{{ feedbackRef.user?.login }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.feedback.reservation">Reservation</span></dt>
+          <dd>
+            @if (feedback()!.reservation) {
+              <div>
+                <a [routerLink]="['/reservation', feedback()!.reservation?.id, 'view']">{{ feedbackRef.reservation?.checkInDate }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+        </button>
+
+        <button type="button" [routerLink]="['/feedback', feedbackRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

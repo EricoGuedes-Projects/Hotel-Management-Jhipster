@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (reservation(); as reservationRef) {
+      <div>
+        <h2 data-cy="reservationDetailsHeading"><span jhiTranslate="finalApp.reservation.detail.title">Reservation</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">Código</span></dt>
+          <dd>
+            <span>{{ reservationRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.reservation.checkInDate">Check In Date</span></dt>
+          <dd>
+            <span>{{ reservationRef.checkInDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.reservation.checkOutDate">Check Out Date</span></dt>
+          <dd>
+            <span>{{ reservationRef.checkOutDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.reservation.totalAmount">Total Amount</span></dt>
+          <dd>
+            <span>{{ reservationRef.totalAmount }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.reservation.status">Status</span></dt>
+          <dd>
+            <span [jhiTranslate]="'finalApp.ReservationStatus.' + (reservationRef.status ?? 'null')">{{
+              { null: '', PENDING: 'PENDING', CONFIRMED: 'CONFIRMED', CANCELLED: 'CANCELLED' }[reservationRef.status ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.reservation.payment">Payment</span></dt>
+          <dd>
+            @if (reservation()!.payment) {
+              <div>
+                <a [routerLink]="['/payment', reservation()!.payment?.id, 'view']">{{ reservationRef.payment?.paymentMethod }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="finalApp.reservation.room">Room</span></dt>
+          <dd>
+            @if (reservation()!.room) {
+              <div>
+                <a [routerLink]="['/room', reservation()!.room?.id, 'view']">{{ reservationRef.room?.roomNumber }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="finalApp.reservation.responsible">Responsible</span></dt>
+          <dd>
+            @if (reservation()!.responsible) {
+              <div>
+                <a [routerLink]="['/employee', reservation()!.responsible?.id, 'view']">{{ reservationRef.responsible?.firstName }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="finalApp.reservation.user">User</span></dt>
+          <dd>
+            <span>{{ reservationRef.user?.login }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+        </button>
+
+        <button type="button" [routerLink]="['/reservation', reservationRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

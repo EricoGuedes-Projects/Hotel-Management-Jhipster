@@ -1,0 +1,192 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-reservation-heading" data-cy="ReservationCreateUpdateHeading" jhiTranslate="finalApp.reservation.home.createOrEditLabel">
+        Criar ou editar Reservation
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="finalApp.reservation.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let checkInDateRef = editForm.get('checkInDate')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_checkInDate" jhiTranslate="finalApp.reservation.checkInDate">Check In Date</label>
+          <div class="d-flex">
+            <input
+              id="field_checkInDate"
+              data-cy="checkInDate"
+              type="datetime-local"
+              class="form-control"
+              name="checkInDate"
+              formControlName="checkInDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (checkInDateRef.invalid && (checkInDateRef.dirty || checkInDateRef.touched)) {
+            <div>
+              @if (editForm.get('checkInDate')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('checkInDate')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >Este campo é do tipo data/hora.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let checkOutDateRef = editForm.get('checkOutDate')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_checkOutDate" jhiTranslate="finalApp.reservation.checkOutDate">Check Out Date</label>
+          <div class="d-flex">
+            <input
+              id="field_checkOutDate"
+              data-cy="checkOutDate"
+              type="datetime-local"
+              class="form-control"
+              name="checkOutDate"
+              formControlName="checkOutDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (checkOutDateRef.invalid && (checkOutDateRef.dirty || checkOutDateRef.touched)) {
+            <div>
+              @if (editForm.get('checkOutDate')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('checkOutDate')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >Este campo é do tipo data/hora.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let totalAmountRef = editForm.get('totalAmount')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_totalAmount" jhiTranslate="finalApp.reservation.totalAmount">Total Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            name="totalAmount"
+            id="field_totalAmount"
+            data-cy="totalAmount"
+            formControlName="totalAmount"
+          />
+          @if (totalAmountRef.invalid && (totalAmountRef.dirty || totalAmountRef.touched)) {
+            <div>
+              @if (editForm.get('totalAmount')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('totalAmount')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >Este campo é do tipo numérico.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let statusRef = editForm.get('status')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_status" jhiTranslate="finalApp.reservation.status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'finalApp.ReservationStatus.null' | translate }}</option>
+            @for (reservationStatus of reservationStatusValues; track $index) {
+              <option [value]="reservationStatus">{{ 'finalApp.ReservationStatus.' + reservationStatus | translate }}</option>
+            }
+          </select>
+          @if (statusRef.invalid && (statusRef.dirty || statusRef.touched)) {
+            <div>
+              @if (editForm.get('status')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_payment" jhiTranslate="finalApp.reservation.payment">Payment</label>
+          <select
+            class="form-control"
+            id="field_payment"
+            data-cy="payment"
+            name="payment"
+            formControlName="payment"
+            [compareWith]="comparePayment"
+          >
+            <option [ngValue]="null"></option>
+            @for (paymentOption of paymentsCollection; track $index) {
+              <option [ngValue]="paymentOption">{{ paymentOption.paymentMethod }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_room" jhiTranslate="finalApp.reservation.room">Room</label>
+          <select class="form-control" id="field_room" data-cy="room" name="room" formControlName="room" [compareWith]="compareRoom">
+            <option [ngValue]="null"></option>
+            @for (roomOption of roomsSharedCollection; track $index) {
+              <option [ngValue]="roomOption">{{ roomOption.roomNumber }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_responsible" jhiTranslate="finalApp.reservation.responsible">Responsible</label>
+          <select
+            class="form-control"
+            id="field_responsible"
+            data-cy="responsible"
+            name="responsible"
+            formControlName="responsible"
+            [compareWith]="compareEmployee"
+          >
+            <option [ngValue]="null"></option>
+            @for (employeeOption of employeesSharedCollection; track $index) {
+              <option [ngValue]="employeeOption">{{ employeeOption.firstName }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_user" jhiTranslate="finalApp.reservation.user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
+            <option [ngValue]="null"></option>
+            @for (userOption of usersSharedCollection; track $index) {
+              <option [ngValue]="userOption">{{ userOption.login }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Salvar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+{
+  "annotations": {
+    "changelogDate": "20250124001347"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "roomNumber",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "roomType",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "pricePerNight",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isAvailable",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "amenities",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Room",
+  "pagination": "infinite-scroll",
+  "relationships": [],
+  "searchEngine": "no"
+}

@@ -1,0 +1,93 @@
+<div>
+  <h2 id="page-heading" data-cy="ReservationHeading">
+    <span jhiTranslate="finalApp.reservation.home.title">Reservations</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="finalApp.reservation.home.refreshListLabel">Atualizar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-reservation"
+        [routerLink]="['/reservation/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="finalApp.reservation.home.createLabel">Criar novo Reservation</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (reservations() && reservations().length) {
+    <div class="table-responsive table-entities" id="entities">
+      <div infinite-scroll (scrolled)="loadNextPage()" [infiniteScrollDisabled]="!hasMorePage()" [infiniteScrollDistance]="0">
+        @for (reservation of reservations(); track trackId(reservation)) {
+          <div class="card mb-3 p-3 shadow-sm" data-cy="entityTable">
+            <div class="card-header bg-light">
+              <h2 class="mb-0">
+                <a [routerLink]="['/reservation', reservation.id, 'view']" class="text-decoration-none text-dark">
+                  <strong>Reservation ID:</strong> {{ reservation.id }}
+                </a>
+              </h2>
+              <p class="mb-0">
+                <strong>Reservation Period:</strong>
+                {{ reservation.checkInDate | formatMediumDatetime }} → {{ reservation.checkOutDate | formatMediumDatetime }}
+              </p>
+            </div>
+
+            <div class="card-body">
+              <p class="mb-1"><strong>Total Price:</strong> {{ reservation.totalAmount }}</p>
+              <p class="mb-1"><strong>Status:</strong> {{ statusLabels[reservation.status ?? 'null'] }}</p>
+
+              @if (reservation.payment) {
+                <p class="mb-1">
+                  <strong>Payment Info:</strong>
+                  <a [routerLink]="['/payment', reservation.payment.id, 'view']" class="text-decoration-none">
+                    {{ reservation.payment.paymentMethod }}
+                  </a>
+                </p>
+              }
+              @if (reservation.room) {
+                <p class="mb-1">
+                  <strong>Room Details:</strong>
+                  <a [routerLink]="['/room', reservation.room.id, 'view']" class="text-decoration-none">
+                    Room {{ reservation.room.roomNumber }}
+                  </a>
+                </p>
+              }
+              @if (reservation.responsible) {
+                <p class="mb-1">
+                  <strong>Responsible:</strong>
+                  <a [routerLink]="['/employee', reservation.responsible.id, 'view']" class="text-decoration-none">
+                    {{ reservation.responsible.firstName }}
+                  </a>
+                </p>
+              }
+            </div>
+
+            <div class="card-footer bg-light d-flex justify-content-between">
+              <a [routerLink]="['/reservation', reservation.id, 'edit']" class="btn btn-primary btn-sm">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span jhiTranslate="entity.action.edit">Edit</span>
+              </a>
+              <button type="submit" (click)="delete(reservation)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="finalApp.reservation.home.notFound">Nenhum Reservation encontrado</span>
+    </div>
+  }
+</div>

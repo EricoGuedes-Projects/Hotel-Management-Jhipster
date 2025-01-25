@@ -1,0 +1,73 @@
+<div>
+  <h2 id="page-heading" data-cy="RoomHeading">
+    <span jhiTranslate="finalApp.room.home.title">Rooms</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="finalApp.room.home.refreshListLabel">Atualizar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-room"
+        [routerLink]="['/room/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="finalApp.room.home.createLabel">Criar novo Room</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (rooms() && rooms().length) {
+    <div class="table-responsive table-entities" id="entities">
+      <div infinite-scroll (scrolled)="loadNextPage()" [infiniteScrollDisabled]="!hasMorePage()" [infiniteScrollDistance]="0">
+        @for (room of rooms(); track trackId(room)) {
+          <div class="card mb-3 p-3 shadow-sm" data-cy="entityTable">
+            <div class="card-header bg-light">
+              <h2 class="mb-0">
+                <a [routerLink]="['/room', room.id, 'view']" class="text-decoration-none text-dark">
+                  <strong>Room ID:</strong> {{ room.id }}
+                </a>
+              </h2>
+              <p class="mb-0">
+                <strong>Room Number:</strong>
+                {{ room.roomNumber }}
+              </p>
+              <p class="mb-0">
+                <strong>Is Available:</strong>
+                {{ room.isAvailable }}
+              </p>
+            </div>
+
+            <div class="card-body">
+              <p class="mb-1"><strong>Room Type:</strong> {{ room.roomType }}</p>
+              <p class="mb-1"><strong>Price per Night:</strong> {{ room.pricePerNight }}</p>
+              <p class="mb-1"><strong>Amenities:</strong> {{ room.amenities }}</p>
+            </div>
+
+            <div class="card-footer bg-light d-flex justify-content-between">
+              <a [routerLink]="['/room', room.id, 'edit']" class="btn btn-primary btn-sm">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span jhiTranslate="entity.action.edit">Edit</span>
+              </a>
+              <button type="submit" (click)="delete(room)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="finalApp.reservation.home.notFound">Nenhum Reservation encontrado</span>
+    </div>
+  }
+</div>

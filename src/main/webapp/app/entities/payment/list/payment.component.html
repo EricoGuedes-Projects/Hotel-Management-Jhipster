@@ -1,0 +1,70 @@
+<div>
+  <h2 id="page-heading" data-cy="PaymentHeading">
+    <span jhiTranslate="finalApp.payment.home.title">Payments</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="finalApp.payment.home.refreshListLabel">Atualizar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-payment"
+        [routerLink]="['/payment/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="finalApp.payment.home.createLabel">Criar novo Payment</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (payments() && payments().length) {
+    <div class="table-responsive table-entities" id="entities">
+      <div infinite-scroll (scrolled)="loadNextPage()" [infiniteScrollDisabled]="!hasMorePage()" [infiniteScrollDistance]="0">
+        @for (payment of payments(); track trackId(payment)) {
+          <div class="card mb-3 p-3 shadow-sm" data-cy="entityTable">
+            <div class="card-header bg-light">
+              <h2 class="mb-0">
+                <a [routerLink]="['/payment', payment.id, 'view']" class="text-decoration-none text-dark">
+                  <strong>Payment Method:</strong>
+                  {{
+                    { null: '', CASH: 'CASH', CREDIT_CARD: 'CREDIT_CARD', DEBIT_CARD: 'DEBIT_CARD', ONLINE: 'ONLINE' }[
+                      payment.paymentMethod ?? 'null'
+                    ]
+                  }}
+                </a>
+              </h2>
+              <p class="mb-0"><strong>Payment ID:</strong> {{ payment.id }}</p>
+            </div>
+
+            <div class="card-body">
+              <p class="mb-1"><strong>Payment Date:</strong> {{ payment.paymentDate }}</p>
+              <p class="mb-1"><strong>Amount:</strong> {{ payment.amount }}</p>
+            </div>
+
+            <div class="card-footer bg-light d-flex justify-content-between">
+              <a [routerLink]="['/payment', payment.id, 'edit']" class="btn btn-primary btn-sm">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span jhiTranslate="entity.action.edit">Edit</span>
+              </a>
+              <button type="submit" (click)="delete(payment)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="finalApp.reservation.home.notFound">Nenhum Reservation encontrado</span>
+    </div>
+  }
+</div>

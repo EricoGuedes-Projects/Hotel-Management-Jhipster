@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (room(); as roomRef) {
+      <div>
+        <h2 data-cy="roomDetailsHeading"><span jhiTranslate="finalApp.room.detail.title">Room</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">Código</span></dt>
+          <dd>
+            <span>{{ roomRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.room.roomNumber">Room Number</span></dt>
+          <dd>
+            <span>{{ roomRef.roomNumber }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.room.roomType">Room Type</span></dt>
+          <dd>
+            <span>{{ roomRef.roomType }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.room.pricePerNight">Price Per Night</span></dt>
+          <dd>
+            <span>{{ roomRef.pricePerNight }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.room.isAvailable">Is Available</span></dt>
+          <dd>
+            <span>{{ roomRef.isAvailable }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.room.amenities">Amenities</span></dt>
+          <dd>
+            <span>{{ roomRef.amenities }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+        </button>
+
+        <button type="button" [routerLink]="['/room', roomRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

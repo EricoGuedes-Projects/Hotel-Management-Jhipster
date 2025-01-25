@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (payment(); as paymentRef) {
+      <div>
+        <h2 data-cy="paymentDetailsHeading"><span jhiTranslate="finalApp.payment.detail.title">Payment</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">Código</span></dt>
+          <dd>
+            <span>{{ paymentRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.payment.paymentDate">Payment Date</span></dt>
+          <dd>
+            <span>{{ paymentRef.paymentDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.payment.amount">Amount</span></dt>
+          <dd>
+            <span>{{ paymentRef.amount }}</span>
+          </dd>
+          <dt><span jhiTranslate="finalApp.payment.paymentMethod">Payment Method</span></dt>
+          <dd>
+            <span [jhiTranslate]="'finalApp.PaymentMethod.' + (paymentRef.paymentMethod ?? 'null')">{{
+              { null: '', CASH: 'CASH', CREDIT_CARD: 'CREDIT_CARD', DEBIT_CARD: 'DEBIT_CARD', ONLINE: 'ONLINE' }[
+                paymentRef.paymentMethod ?? 'null'
+              ]
+            }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+        </button>
+
+        <button type="button" [routerLink]="['/payment', paymentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

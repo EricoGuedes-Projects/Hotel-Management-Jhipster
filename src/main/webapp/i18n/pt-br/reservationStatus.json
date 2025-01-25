@@ -1,0 +1,10 @@
+{
+  "finalApp": {
+    "ReservationStatus": {
+      "null": "",
+      "PENDING": "PENDING",
+      "CONFIRMED": "CONFIRMED",
+      "CANCELLED": "CANCELLED"
+    }
+  }
+}
